@@ -6,7 +6,7 @@
 ---
 
 ## 📂 Struktur Folder Proyek
-* `src/` : Berisi file source code utama (`Cobaan.cpp`).
+* `src/` : Berisi file source code utama (`Main.cpp`).
 * `docs/` : Berisi dokumen laporan tugas akhir kelompok.
 
 ---
