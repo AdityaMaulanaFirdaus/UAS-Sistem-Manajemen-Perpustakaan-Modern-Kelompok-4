@@ -83,7 +83,7 @@ void editBuku() {
 }
 
 
-// --- TUGAS 3 Modul Transaksi & Algoritma Pengurutan (Oleh: Devina Putri) ---
+// --- TUGAS 3 Modul Sirkulasi & Algoritma Pengurutan (Oleh: Devina Putri) ---
 void pinjamBuku() {
     // Tulis logika transaksi peminjaman buku di sini
     cout << "\n----- Fitur Pinjam Buku -----" << endl;
