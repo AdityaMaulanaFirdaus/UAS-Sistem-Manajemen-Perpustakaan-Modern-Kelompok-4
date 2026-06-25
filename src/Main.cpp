@@ -108,21 +108,80 @@ void cariBuku() {
 
 // --- TUGAS 2 Modul Manajemen Koleksi Buku (Oleh: Sri Agnia) ---
 void tambahBuku() {
-    // Tulis logika tambah buku baru di sini
-    cout << "\n----- Fitur Tambah Buku Baru -----" << endl;
-    cout << "Fitur ini masih dalam pengembangan...\n";
+    if (jumlahBuku >= MAX_BUKU) {
+        cout << "\nKapasitas perpustakaan penuh!\n";
+        return;
+    }
+    
+    string idBaru;
+    cout << "\nMasukkan ID Buku baru: "; 
+    getline(cin, idBaru);
+
+    for (int i = 0; i < jumlahBuku; i++) {
+        if (toLowerManual(daftarBuku[i].idBuku) == toLowerManual(idBaru)) {
+            cout << "\n[Error] ID Buku '" << idBaru << "' sudah digunakan oleh buku lain!\n";
+            return;
+        }
+    }
+    
+    daftarBuku[jumlahBuku].idBuku = idBaru;
+    cout << "Masukkan Judul Buku  : "; 
+    getline(cin, daftarBuku[jumlahBuku].judul);
+    cout << "Masukkan Pengarang   : "; 
+    getline(cin, daftarBuku[jumlahBuku].pengarang);
+    
+    daftarBuku[jumlahBuku].tersedia = true;
+    jumlahBuku++;
+    cout << "\n>> Buku berhasil ditambahkan!\n";
 }
 
 void hapusBuku() {
-    // Tulis logika hapus data buku di sini
-    cout << "\n----- Fitur Hapus Buku Lama -----" << endl;
-    cout << "Fitur ini masih dalam pengembangan...\n";
+    string id;
+    cout << "\nMasukkan ID Buku yang ingin dihapus: "; 
+    getline(cin, id);
+    
+    int indeks = -1;
+    for (int i = 0; i < jumlahBuku; i++) {
+        if (toLowerManual(daftarBuku[i].idBuku) == toLowerManual(id)) {
+            indeks = i;
+            break;
+        }
+    }
+    if (indeks == -1) {
+        cout << "Buku dengan ID tersebut tidak ditemukan.\n";
+    } else {
+        for (int i = indeks; i < jumlahBuku - 1; i++) {
+            daftarBuku[i] = daftarBuku[i + 1];
+        }
+        jumlahBuku--;
+        cout << "\n>> Buku berhasil dihapus!\n";
+    }
 }
 
 void editBuku() {
-    // Tulis logika edit informasi buku di sini
-    cout << "\n----- Fitur Edit Informasi Buku -----" << endl;
-    cout << "Fitur ini masih dalam pengembangan...\n";
+    string id;
+    cout << "\nMasukkan ID Buku yang ingin diedit: ";
+    getline(cin, id);
+    
+    string idInputLower = toLowerManual(id);
+    
+    for (int i = 0; i < jumlahBuku; i++) {
+        if (toLowerManual(daftarBuku[i].idBuku) == idInputLower) {
+            cout << "\n[Buku Ditemukan]\n";
+            cout << "Judul Lama    : " << daftarBuku[i].judul << endl;
+            cout << "Pengarang Lama: " << daftarBuku[i].pengarang << endl;
+            cout << "----------------------------------------\n";
+            
+            cout << "Masukkan Judul Baru    : ";
+            getline(cin, daftarBuku[i].judul);
+            cout << "Masukkan Pengarang Baru: ";
+            getline(cin, daftarBuku[i].pengarang);
+            
+            cout << "\n>> Data buku berhasil diperbarui!\n";
+            return;
+        }
+    }
+    cout << "Buku dengan ID tersebut tidak ditemukan.\n";
 }
 
 
