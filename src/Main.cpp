@@ -187,22 +187,83 @@ void editBuku() {
 
 // --- TUGAS 3 Modul Sirkulasi & Algoritma Pengurutan (Oleh: Devina Putri) ---
 void pinjamBuku() {
-    // Tulis logika transaksi peminjaman buku di sini
-    cout << "\n----- Fitur Pinjam Buku -----" << endl;
-    cout << "Fitur ini masih dalam pengembangan...\n";
+    string id;
+    cout << "\nMasukkan ID Buku yang ingin dipinjam: "; 
+    getline(cin, id);
+    
+    string idInputLower = toLowerManual(id);
+    
+    for (int i = 0; i < jumlahBuku; i++) {
+        if (toLowerManual(daftarBuku[i].idBuku) == idInputLower) {
+            if (daftarBuku[i].tersedia) {
+                daftarBuku[i].tersedia = false;
+                riwayatPeminjaman[jumlahRiwayat] = "Meminjam buku: " + daftarBuku[i].judul;
+                jumlahRiwayat++;
+                cout << "\n>> Berhasil meminjam buku: " << daftarBuku[i].judul << endl;
+            } else {
+                cout << "\n[Peringatan] Maaf, buku sedang dipinjam orang lain.\n";
+            }
+            return;
+        }
+    }
+    cout << "ID Buku tidak terdaftar.\n";
 }
 
 void kembalikanBuku() {
-    // Tulis logika transaksi pengembalian buku dan cek denda di sini
-    cout << "\n----- Fitur Kembalikan Buku (Cek Denda) -----" << endl;
-    cout << "Fitur ini masih dalam pengembangan...\n";
+    string id;
+    cout << "\nMasukkan ID Buku yang ingin dikembalikan: "; 
+    getline(cin, id);
+    
+    string idInputLower = toLowerManual(id);
+    
+    for (int i = 0; i < jumlahBuku; i++) {
+        if (toLowerManual(daftarBuku[i].idBuku) == idInputLower) {
+            if (!daftarBuku[i].tersedia) {
+                if (jumlahRiwayat < MAX_BUKU) {
+                    int lamaPinjam = 0;
+                    cout << "Berapa hari buku ini dipinjam? : ";
+                    cin >> lamaPinjam;
+                    cin.ignore();
+
+                    daftarBuku[i].tersedia = true;
+                    int denda = 0;
+                    string infoDenda = "";
+
+                    if (lamaPinjam > 7) {
+                        denda = (lamaPinjam - 7) * 5000;
+                        infoDenda = " (Terlambat " + angkaKeStringManual(lamaPinjam - 7) + " hari, Denda: Rp" + angkaKeStringManual(denda) + ")";
+                        cout << "\n[Peringatan] Anda terlambat mengembalikan buku! Denda: Rp" << denda << endl;
+                    }
+
+                    riwayatPeminjaman[jumlahRiwayat] = "Mengembalikan buku: " + daftarBuku[i].judul + infoDenda;
+                    jumlahRiwayat++;
+                    cout << "\n>> Terima kasih, buku \"" << daftarBuku[i].judul << "\" telah dikembalikan.\n";
+                } else {
+                    cout << "\n[Error] Riwayat transaksi penuh!\n";
+                }
+            } else {
+                cout << "\n[Peringatan] Buku ini sudah ada di perpustakaan.\n";
+            }
+            return;
+        }
+    }
+    cout << "ID Buku tidak terdaftar.\n";
 }
 
 void sortingBuku() {
-    // Tulis logika pengurutan buku (A-Z) berdasarkan judul di sini
-    cout << "\n----- Fitur Urutkan Semua Daftar Buku (A-Z) -----" << endl;
-    cout << "Fitur ini masih dalam pengembangan...\n";
+    for (int i = 0; i < jumlahBuku - 1; i++) {
+        for (int j = 0; j < jumlahBuku - i - 1; j++) {
+            if (daftarBuku[j].judul > daftarBuku[j + 1].judul) {
+                NodeBuku temp = daftarBuku[j];
+                daftarBuku[j] = daftarBuku[j + 1];
+                daftarBuku[j + 1] = temp;
+            }
+        }
+    }
+    cout << "\n>> Daftar buku berhasil diurutkan berdasarkan judul (A-Z)!\n";
+    tampilBuku();
 }
+
 
 
 // --- TUGAS 4 Modul Laporan & Rekomendasi Sistem (Oleh: Rezki) ---
