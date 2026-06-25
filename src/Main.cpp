@@ -45,21 +45,64 @@ string toLowerManual(string s) {
 
 // --- TUGAS 1 Modul Data Awal & Informasi Buku (Oleh: Nazwa Alia) ---
 void loadDatabaseBuku() {
-    // Tulis logika load data buku awal di sini
-    cout << "\n----- Fitur Load Database Buku -----" << endl;
-    cout << "Fitur ini masih dalam pengembangan...\n";
+    void loadDatabaseBuku() {
+    daftarBuku[0].idBuku = "B01"; daftarBuku[0].judul = "Struktur Data C++";   daftarBuku[0].pengarang = "sasa";   daftarBuku[0].tersedia = true;
+    daftarBuku[1].idBuku = "B02"; daftarBuku[1].judul = "Dasar Pemrograman";   daftarBuku[1].pengarang = "martin "; daftarBuku[1].tersedia = true;
+    daftarBuku[2].idBuku = "B03"; daftarBuku[2].judul = "Logika Informatika";  daftarBuku[2].pengarang = "chou ";  daftarBuku[2].tersedia = true;
+    daftarBuku[3].idBuku = "B04"; daftarBuku[3].judul = "pengenalan algoritma";  daftarBuku[3].pengarang = "budi ";  daftarBuku[3].tersedia = true;
+    daftarBuku[4].idBuku = "B05"; daftarBuku[4].judul = "Pemrograman Berorientasi Objek";  daftarBuku[4].pengarang = "dewi ";  daftarBuku[4].tersedia = true;
+    jumlahBuku = 5;
 }
 
 void tampilBuku() {
-    // Tulis logika menampilkan semua buku dan statistik di sini
-    cout << "\n----- Fitur Tampilkan Buku & Statistik -----" << endl;
-    cout << "Fitur ini masih dalam pengembangan...\n";
+    cout << "\n========================================\n";
+    cout << "        DAFTAR BUKU PERPUSTAKAAN        \n";
+    cout << "========================================\n";
+    if (jumlahBuku == 0) {
+        cout << "Perpustakaan kosong.\n";
+        return;
+    }
+    
+    int dipinjam = 0;
+    int tersedia = 0;
+
+    for (int i = 0; i < jumlahBuku; i++) {
+        cout << "ID: " << daftarBuku[i].idBuku 
+             << " | Judul: " << daftarBuku[i].judul 
+             << " | Pengarang: " << daftarBuku[i].pengarang 
+             << " | Status: " << (daftarBuku[i].tersedia ? "Tersedia" : "Dipinjam") << endl;
+        
+        if (daftarBuku[i].tersedia) tersedia++;
+        else dipinjam++;
+    }
+    
+    cout << "----------------------------------------\n";
+    cout << "Total Buku: " << jumlahBuku << " | Tersedia: " << tersedia << " | Dipinjam: " << dipinjam << "\n";
+    cout << "========================================\n";
 }
 
 void cariBuku() {
-    // Tulis logika pencarian pintar di sini
-    cout << "\n----- Fitur Cari Buku -----" << endl;
-    cout << "Fitur ini masih dalam pengembangan...\n";
+    string kataKunci;
+    cout << "\nMasukkan Judul atau ID Buku yang dicari: ";
+    getline(cin, kataKunci);
+    
+    string keywordLower = toLowerManual(kataKunci);
+    bool ketemu = false;
+    
+    for (int i = 0; i < jumlahBuku; i++) {
+        string judulLower = toLowerManual(daftarBuku[i].judul);
+        string idLower = toLowerManual(daftarBuku[i].idBuku);
+        
+        if (judulLower.find(keywordLower) != string::npos || idLower == keywordLower) {
+            cout << "\n[Buku Ditemukan]\n";
+            cout << "ID: " << daftarBuku[i].idBuku 
+                 << " | Judul: " << daftarBuku[i].judul 
+                 << " | Pengarang: " << daftarBuku[i].pengarang
+                 << " | Status: " << (daftarBuku[i].tersedia ? "Tersedia" : "Dipinjam") << endl;
+            ketemu = true;
+        }
+    }
+    if (!ketemu) cout << "Buku tidak ditemukan.\n";
 }
 
 
