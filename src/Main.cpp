@@ -268,22 +268,34 @@ void sortingBuku() {
 
 // --- TUGAS 4 Modul Laporan & Rekomendasi Sistem (Oleh: Rezki) ---
 void rekomendasiBuku() {
-    // Tulis logika menampilkan rekomendasi buku di sini
-    cout << "\n----- Fitur Lihat Rekomendasi Buku Minggu Ini -----" << endl;
-    cout << "Fitur ini masih dalam pengembangan...\n";
+    cout << "\n========================================\n";
+    cout << "        REKOMENDASI BUKU MINGGU INI      \n";
+    cout << "========================================\n";
+    if (jumlahBuku > 0) {
+        cout << " -> " << daftarBuku[0].judul << " (Paling banyak dicari)\n";
+    } else {
+        cout << " Belum ada rekomendasi.\n";
+    }
 }
 
 void riwayatBuku() {
-    // Tulis logika menampilkan semua riwayat transaksi di sini
-    cout << "\n----- Fitur Lihat Semua Riwayat Transaksi -----" << endl;
-    cout << "Fitur ini masih dalam pengembangan...\n";
+    cout << "\n========================================\n";
+    cout << "      RIWAYAT TRANSAKSI PERPUSTAKAAN    \n";
+    cout << "========================================\n";
+    if (jumlahRiwayat == 0) {
+        cout << " Belum ada riwayat transaksi.\n";
+        return;
+    }
+    for (int i = 0; i < jumlahRiwayat; i++) {
+        cout << " " << i + 1 << ". " << riwayatPeminjaman[i] << endl;
+    }
 }
 
 void hapusRiwayat() {
-    // Tulis logika menghapus semua catatan riwayat di sini
-    cout << "\n----- Fitur Hapus Semua Catatan Riwayat -----" << endl;
-    cout << "Fitur ini masih dalam pengembangan...\n";
+    jumlahRiwayat = 0;
+    cout << "\n>> Semua riwayat transaksi berhasil dihapus!\n";
 }
+
 
 
 // --- MENU UTAMA ---
