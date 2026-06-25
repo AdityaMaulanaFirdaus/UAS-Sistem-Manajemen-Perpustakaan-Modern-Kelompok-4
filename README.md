@@ -15,28 +15,28 @@
 
 Proyek ini dikembangkan secara kolaboratif menggunakan Git Branching Workflow dengan membagi program ke dalam modul independen berbentuk sub-menu, yang diintegrasikan oleh Lead Developer melalui sinkronisasi data global:
 
-### 01. [Nama Ketua Kelompok] — Lead Developer & UI Architect
-* **NIM:** [Masukkan NIM]
+### 01. [Aditya Maulana Firdaus] — Lead Developer & UI Architect
+* **NIM:** [2503010003]
 * **Modul:** `UI Menu Architecture, Core Logic, & System Integration`
 * **Tanggung Jawab:** Merancang arsitektur menu utama bertingkat (*Sub-Menu System*), membangun fondasi *Array of Struct* (`Buku`), membuat fungsi helper teks & konversi matematika (`toLowerManual` dan `angkaKeStringManual`) untuk mencegah *runtime error* pada compiler, serta mengintegrasikan seluruh fungsi anggota kelompok tanpa adanya *merge conflict*.
 
-### 02. [Nama Anggota 2] — Software Engineer (Data Initialization & Information Specialist)
-* **NIM:** [Masukkan NIM]
+### 02. [Nazwa Allia Kusmana] — Software Engineer (Data Initialization & Information Specialist)
+* **NIM:** [2503010036]
 * **Modul:** `Database Initialization, Lookups, & Visualizations`
 * **Tanggung Jawab:** Mengelola fungsi pencatatan koleksi data bawaan via `loadDatabaseBuku()`, menyusun fungsi `tampilBuku()` yang dilengkapi kalkulasi statistik ketersediaan buku secara *real-time*, serta membangun mesin pencarian berbasis pencocokan parsial teks (*string find traversal*) pada fungsi `cariBuku()`.
 
-### 03. [Nama Anggota 3] — Software Engineer (Data Modification Specialist)
-* **NIM:** [Masukkan NIM]
+### 03. [Sri Agnia] — Software Engineer (Data Modification Specialist)
+* **NIM:** [2503010040]
 * **Modul:** `Data Insertion, Deletion, & Modification (CRUD)`
 * **Tanggung Jawab:** Mengimplementasikan fungsi `tambahBuku()` dengan validasi keamanan ID unik (mencegah *duplicate primary key*), menyusun logika pergeseran indeks (*index shifting traversal*) pada fungsi `hapusBuku()`, serta merancang fungsi `editBuku()` untuk memperbarui judul dan pengarang secara dinamis.
 
-### 04. [Nama Anggota 4] — Software Engineer (Circulation & Sorting Specialist)
-* **NIM:** [Masukkan NIM]
+### 04. [Devina Putri Nur Aliah] — Software Engineer (Circulation & Sorting Specialist)
+* **NIM:** [2503010045]
 * **Modul:** `Circulation System, Fine Management, & Sorting Algorithm`
 * **Tanggung Jawab:** Merancang fungsi sirkulasi `pinjamBuku()` dan `kembalikanBuku()` yang terikat dengan perubahan status boolean koleksi, mengimplementasikan algoritma hitung denda keterlambatan otomatis sebesar **Rp20.000,-/hari**, serta menerapkan algoritma **Bubble Sort** pada `sortingBuku()` untuk penataan alfabetis judul (A-Z) dengan kompleksitas waktu $O(n^2)$.
 
-### 05. [Nama Anggota 5] — Software Engineer & Technical Writer
-* **NIM:** [Masukkan NIM]
+### 05. [Rezki Ahmad Fauzi] — Software Engineer & Technical Writer
+* **NIM:** [2503010018]
 * **Modul:** `Recommendation Systems, Transaction Logs, & Documentation`
 * **Tanggung Jawab:** Menyusun fungsi penarik rekomendasi buku terpopuler `rekomendasiBuku()`, mengelola *buffer array* untuk pelacakan aktivitas peminjaman lewat `riwayatBuku()`, membangun fitur pembersihan memori transaksi `hapusRiwayat()`, serta bertanggung jawab penuh atas dokumentasi laporan teknis UAS.
 
