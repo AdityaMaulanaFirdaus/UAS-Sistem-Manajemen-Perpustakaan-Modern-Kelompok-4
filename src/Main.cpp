@@ -45,7 +45,6 @@ string toLowerManual(string s) {
 
 // --- TUGAS 1 Modul Data Awal & Informasi Buku (Oleh: Nazwa Alia) ---
 void loadDatabaseBuku() {
-    void loadDatabaseBuku() {
     daftarBuku[0].idBuku = "B01"; daftarBuku[0].judul = "Struktur Data C++";   daftarBuku[0].pengarang = "sasa";   daftarBuku[0].tersedia = true;
     daftarBuku[1].idBuku = "B02"; daftarBuku[1].judul = "Dasar Pemrograman";   daftarBuku[1].pengarang = "martin "; daftarBuku[1].tersedia = true;
     daftarBuku[2].idBuku = "B03"; daftarBuku[2].judul = "Logika Informatika";  daftarBuku[2].pengarang = "chou ";  daftarBuku[2].tersedia = true;
