@@ -1,86 +1,205 @@
 # 📚 Sistem Manajemen Perpustakaan Modern (SMPM) - Kelompok 4
 
 > **Proyek UAS Praktikum Algoritma dan Struktur Data**
-> Sebuah sistem otomasi tata kelola data literatur terintegrasi berbasis *desktop console* (C++) yang menerapkan arsitektur data linear *Array of Struct* yang dikombinasikan dengan algoritma sorting sekuensial, sistem *case-insensitive*, manajemen denda, dan pelacakan riwayat berbasis *buffer array* statis untuk efisiensi pelacakan sirkulasi buku.
+>
+> Sistem Manajemen Perpustakaan Modern merupakan aplikasi berbasis **C++ Console** yang menerapkan konsep **Singly Linked List**, **Queue**, dan **Stack** untuk mengelola koleksi buku, layanan antrean mahasiswa, serta pencatatan riwayat transaksi perpustakaan.
 
 ---
 
 ## 📂 Struktur Folder Proyek
-* `src/` : Berisi file source code utama (`Main.cpp`).
-* `docs/` : Berisi dokumen laporan tugas akhir kelompok.
+
+```
+Sistem-Manajemen-Perpustakaan-Modern/
+│
+├── docs/
+│   ├── Laporan.pdf
+│   ├── Flowchart.pdf
+│   └── PPT Sistem Manajemen Perpustakaan Modern.pptx
+│
+├── src/
+│   └── Main.cpp
+│
+├── .gitignore
+│
+└── README.md
+```
+
+**Keterangan Folder**
+- **docs/** : Berisi dokumen pendukung proyek.
+  - `Laporan.pdf`
+  - `Flowchart.pdf`
+  - `PPT Sistem Manajemen Perpustakaan Modern.pptx`
+- **src/** : Berisi source code utama (`Main.cpp`).
+- **.gitignore** : Mengabaikan file yang tidak perlu diunggah ke Git.
+- **README.md** : Dokumentasi proyek dan pembagian tugas.
 
 ---
 
-## 👥 Tim Pengembang & Kontribusi Kode (Contributors)
-
-Proyek ini dikembangkan secara kolaboratif menggunakan Git Branching Workflow dengan membagi program ke dalam modul independen berbentuk sub-menu, yang diintegrasikan oleh Lead Developer melalui sinkronisasi data global:
-
-### 01. [Aditya Maulana Firdaus] — Lead Developer & UI Architect
-* **NIM:** [2503010003]
-* **Modul:** `UI Menu Architecture, Core Logic, & System Integration`
-* **Tanggung Jawab:** Merancang arsitektur menu utama bertingkat (*Sub-Menu System*), membangun fondasi *Array of Struct* (`Buku`), membuat fungsi helper teks & konversi matematika (`toLowerManual` dan `angkaKeStringManual`) untuk mencegah *runtime error* pada compiler, serta mengintegrasikan seluruh fungsi anggota kelompok tanpa adanya *merge conflict*.
-
-### 02. [Nazwa Allia Kusmana] — Software Engineer (Data Initialization & Information Specialist)
-* **NIM:** [2503010036]
-* **Modul:** `Database Initialization, Lookups, & Visualizations`
-* **Tanggung Jawab:** Mengelola fungsi pencatatan koleksi data bawaan via `loadDatabaseBuku()`, menyusun fungsi `tampilBuku()` yang dilengkapi kalkulasi statistik ketersediaan buku secara *real-time*, serta membangun mesin pencarian berbasis pencocokan parsial teks (*string find traversal*) pada fungsi `cariBuku()`.
-
-### 03. [Sri Agnia] — Software Engineer (Data Modification Specialist)
-* **NIM:** [2503010040]
-* **Modul:** `Data Insertion, Deletion, & Modification (CRUD)`
-* **Tanggung Jawab:** Mengimplementasikan fungsi `tambahBuku()` dengan validasi keamanan ID unik (mencegah *duplicate primary key*), menyusun logika pergeseran indeks (*index shifting traversal*) pada fungsi `hapusBuku()`, serta merancang fungsi `editBuku()` untuk memperbarui judul dan pengarang secara dinamis.
-
-### 04. [Devina Putri Nur Aliah] — Software Engineer (Circulation & Sorting Specialist)
-* **NIM:** [2503010045]
-* **Modul:** `Circulation System, Fine Management, & Sorting Algorithm`
-* **Tanggung Jawab:** Merancang fungsi sirkulasi `pinjamBuku()` dan `kembalikanBuku()` yang terikat dengan perubahan status boolean koleksi, mengimplementasikan algoritma hitung denda keterlambatan otomatis sebesar **Rp20.000,-/hari**, serta menerapkan algoritma **Bubble Sort** pada `sortingBuku()` untuk penataan alfabetis judul (A-Z) dengan kompleksitas waktu $O(n^2)$.
-
-### 05. [Rezki Ahmad Fauzi] — Software Engineer & Technical Writer
-* **NIM:** [2503010018]
-* **Modul:** `Recommendation Systems, Transaction Logs, & Documentation`
-* **Tanggung Jawab:** Menyusun fungsi penarik rekomendasi buku terpopuler `rekomendasiBuku()`, mengelola *buffer array* untuk pelacakan aktivitas peminjaman lewat `riwayatBuku()`, membangun fitur pembersihan memori transaksi `hapusRiwayat()`, serta bertanggung jawab penuh atas dokumentasi laporan teknis UAS.
+**Keterangan Folder:**
+- **docs/** : Berisi dokumen pendukung proyek (Laporan, Flowchart, dan PPT).
+- **src/** : Berisi source code utama (`Main.cpp`).
+- **.gitignore** : Mengabaikan file yang tidak perlu diunggah ke Git.
+- **README.md** : Dokumentasi proyek dan pembagian tugas kelompok.
 
 ---
 
-## 🚀 Fitur Utama & Representasi Struktur Data
+# 👥 Tim Pengembang & Pembagian Tugas
 
-| No | Fitur Aplikasi | Struktur Data Terpilih | Algoritma / Prinsip Kerja | Keunggulan & Alasan Pemilihan Teknik |
-| :--- | :--- | :--- | :--- | :--- |
-| **1** | **Database Koleksi** | **Array of Struct (`Buku`)** | *Direct Indexing Access* | Memetakan entitas data majemuk (ID, Judul, Pengarang, Status) dalam satu larik memori bertetangga, mempermudah akses indeks secara instan. |
-| **2** | **Sirkulasi Buku** | **Boolean State Tracking** | *State Flag Switching* | Mengubah status internal `.tersedia` (`true`/`false`) secara cepat saat terjadi transaksi peminjaman tanpa merusak data fundamental buku. |
-| **3** | **Pengurutan Judul** | **Array** | **Bubble Sort (A-Z)** | Mengurutkan tumpukan buku berdasarkan alfabet judul. Sangat stabil untuk kapasitas koleksi skala menengah ($MAX\_BUKU = 100$). |
-| **4** | **Log Transaksi** | **Linear Array Buffer** | *Sequential Logging* | Mencatat alur masuk-keluar buku secara kronologis ke dalam array `riwayatPeminjaman` untuk transparansi audit perpustakaan. |
-| **5** | **Manajemen Denda** | **Primitive Data Logic** | *Conditional Calculation* | Melakukan evaluasi kondisi penalti `if (lamaPinjam > 7)` untuk menghitung denda Rp20.000,- per hari secara matematis. |
-| **6** | **Case-Insensitive** | **String Char Manipulation** | *ASCII Upper-to-Lower Traversal* | Mentransformasikan setiap karakter string kapital ke huruf kecil via ASCII (+32) untuk menjamin akurasi pencarian dan transaksi tanpa sensitivitas *case*. |
+Proyek ini dikembangkan menggunakan **Git Branching Workflow**, di mana setiap anggota mengerjakan modul yang berbeda di cabangnya masing-masing, kemudian digabungkan (*merge*) ke branch utama.
 
 ---
 
-## 🔗 Sinkronisasi & Inter-Module Integration (Kelebihan Sistem)
+## 01. Aditya Maulana Firdaus — Ketua / Lead Developer & Integrator
+**NIM:** 2503010003
 
-Aplikasi ini menerapkan interaksi hulu-ke-hilir antar fungsi yang dinamis, memastikan setiap modul bekerja sebagai satu kesatuan ekosistem:
+### Modul
+Core Architecture, Utility Function, Main Program, dan Integrasi Sistem.
 
-1. **Sirkulasi ➡️ Laporan Finansial & Riwayat (`kembalikanBuku()` ➡️ `riwayatPeminjaman`):** Setiap kali sirkulasi pengembalian mendeteksi keterlambatan oleh modul Anggota 4, sistem mengonversi data nominal denda secara manual dan mengirimkan log kronologis terformat ke dalam modul Anggota 5.
-2. **Sorting ➡️ Refreshed UI (`sortingBuku()` ➡️ `tampilBuku()`):** Setelah algoritma Bubble Sort milik Anggota 4 selesai merestrukturisasi urutan memori array, fungsi tersebut secara otomatis memanggil fungsi `tampilBuku()` milik Anggota 2 untuk langsung menyajikan visualisasi data terurut kepada pengguna.
-3. **Input Stream Safety (`main()` ➡️ `getline()`):** Penempatan pembersihan buffer `cin.ignore()` oleh Ketua Kelompok di jantung kendali menu `main()` menjamin bahwa fungsi pencarian input kalimat (`getline`) pada modul Anggota 2, 3, dan 4 tidak akan mengalami *skipping bug*.
+### Tanggung Jawab
+- Mendesain struktur program secara keseluruhan.
+- Membuat fungsi utilitas inti:
+  - `toLowerManual()` (konversi huruf kecil)
+  - `angkaKeStringManual()` (konversi angka ke string)
+- Menyusun fungsi utama `main()` beserta alur navigasi menu aplikasi.
+- Menambahkan validasi input menu guna mencegah *error/crash*.
+- Mengintegrasikan seluruh berkas kiriman dari setiap anggota kelompok.
+- Melakukan testing, debugging, merge branch, dan finalisasi program.
 
 ---
 
-## 🗺️ Alur & Arsitektur Menu Utama Aplikasi
+## 02. Nazwa Allia Kusmana — Book Database Module
+**NIM:** 2503010036
 
-Eksekusi program terpusat pada perulangan `do-while` di fungsi `main()` dengan pembagian sub-menu fungsional (Modul Terintegrasi) sebagai berikut:
+### Modul
+Linked List Initialization & Book Database
 
-* **[1] Menu Manajemen Data & Koleksi Buku (Tugas Anggota 2, 3 & 4)**
-  * *Tampilkan Semua Buku & Statistik:* Menyajikan tabel buku aktif beserta kalkulasi ketersediaan buku secara *real-time*.
-  * *Cari Buku:* Membuka pencarian buku secara linear berbasis kesamaan judul atau ID secara *case-insensitive*.
-  * *Urutkan Semua Daftar Buku (A-Z):* Menyortir urutan memori buku alfabetis menggunakan algoritma Bubble Sort.
-  * *Lihat Rekomendasi Buku Minggu Ini:* Menampilkan rekomendasi buku terpopuler dalam sistem.
-  * *Tambah Buku Baru:* Melakukan *insert* entitas buku baru ke dalam array dengan proteksi duplikasi *primary key*.
-  * *Hapus Buku Lama:* Mengeliminasi data buku menggunakan skema *index shifting traversal*.
-  * *Edit Informasi Buku:* Memperbarui data judul dan pengarang dari ID buku tertentu.
-* **[2] Menu Transaksi Peminjaman (Tugas Anggota 4)**
-  * *Pinjam Buku:* Memvalidasi ID buku dan mengubah bendera status ketersediaan menjadi *false*.
-  * *Kembalikan Buku (Cek Denda):* Mengembalikan status buku menjadi *true* serta menghitung pinalti keterlambatan (Rp20.000,-/hari jika pinjam > 7 hari).
-* **[3] Menu Laporan Riwayat Transaksi (Tugas Anggota 5)**
-  * *Lihat Semua Riwayat Transaksi:* Membuka isi *buffer array* catatan log masuk-keluar buku secara kronologis.
-  * *Hapus Semua Catatan Riwayat:* Melakukan *reset clearance* pointer jumlah riwayat transaksi kembali ke angka nol.
-* **[4] Keluar Sistem:** Menutup alur perulangan program secara aman.
+### Daftar Fungsi
+- `sisipBuku()`
+- `loadDatabaseBuku()`
+- `tampilkanSemuaBuku()`
+- `cariBuku()`
+
+### Tanggung Jawab
+Mengelola penyimpanan data buku menggunakan struktur data **Singly Linked List**, memuat data awal bawaan (*hardcoded*) perpustakaan, menampilkan seluruh daftar koleksi buku, serta melakukan pencarian buku berdasarkan judul maupun ID.
+
+---
+
+## 03. Sri Agnia — Collection Management Module
+**NIM:** 2503010040
+
+### Modul
+Collection Management & Sorting
+
+### Daftar Fungsi
+- `rekomendasiBuku()`
+- `tambahBuku()`
+- `hapusBuku()`
+- `urutkanBuku()`
+
+### Tanggung Jawab
+Mengembangkan fitur rekomendasi buku pintar, penambahan koleksi buku baru via input user, penghapusan koleksi dari list berdasarkan ID buku, serta pengurutan data buku (A-Z) menggunakan algoritma **Bubble Sort** berbasis manipulasi pointer.
+
+---
+
+## 04. Devina Putri Nur Aliah — Queue Service Module
+**NIM:** 2503010045
+
+### Modul
+Queue Service & Book Borrowing
+
+### Daftar Fungsi
+- `tambahAntreanLoket()`
+- `tampilkanSemuaAntrean()`
+- `panggilAntreanLoket()`
+- `pinjamBuku()`
+
+### Tanggung Jawab
+Mengembangkan sistem antrean pelayanan loket perpustakaan menggunakan prinsip **Queue (FIFO)**, menampilkan daftar antrean aktif, memanggil mahasiswa sesuai urutan antrean untuk dilayani di meja loket, serta menangani proses peminjaman buku.
+
+---
+
+## 05. Rezki Ahmad Fauzi — Transaction & Report Module
+**NIM:** 2503010018
+
+### Modul
+Book Return, Stack & Reporting
+
+### Daftar Fungsi
+- `pushRiwayat()`
+- `kembalikanBuku()`
+- `lihatRiwayatTransaksi()`
+- `lihatLaporanKeuanganDenda()`
+- `hapusRiwayatTerbaru()`
+
+### Tanggung Jawab
+Mengembangkan modul pengembalian buku, melakukan pencatatan setiap riwayat transaksi yang sukses ke dalam struktur data **Stack (LIFO)**, mengelola laporan akumulasi keuangan denda kas perpustakaan, serta menyediakan fitur pembatalan/penghapusan riwayat transaksi paling atas (*Pop Stack*).
+
+---
+
+# 🚀 Fitur Program
+
+| No | Fitur Utama | Struktur Data Pendukung | Pendekatan / Algoritma |
+|:--:|:------------|:------------------------|:-----------------------|
+| 1 | Database Koleksi Buku | Singly Linked List | Dynamic Memory Allocation |
+| 2 | Pencarian Buku | Singly Linked List | Sequential Search |
+| 3 | Pengurutan Buku (A-Z) | Singly Linked List | Bubble Sort (Pointer Manipulation) |
+| 4 | Antrean Loket Mahasiswa| Queue | FIFO (First In First Out) |
+| 5 | Riwayat Sirkulasi | Stack | LIFO (Last In First Out) |
+| 6 | Laporan Kas Denda | Variabel Global & Stack | Akumulasi Data Dinamis |
+
+---
+
+# 🔗 Integrasi Antar Modul
+
+Program dirancang agar seluruh struktur data terhubung secara logis sehingga membentuk satu ekosistem perpustakaan yang utuh:
+
+1. **Queue ➜ Transaksi Buku**: Mahasiswa diwajibkan mengambil nomor antrean loket terlebih dahulu. Transaksi peminjaman atau pengembalian hanya dapat diproses apabila ada mahasiswa aktif yang sedang dilayani di meja loket.
+2. **Linked List ➜ Status Buku**: Setiap kali transaksi peminjaman (sukses) atau pengembalian dilakukan, sistem otomatis merubah status ketersediaan (`bool tersedia`) pada node buku di Linked List.
+3. **Transaksi ➜ Stack**: Seluruh data transaksi yang berhasil dieksekusi akan otomatis dibungkus menjadi informasi teks lalu di-*push* ke dalam Stack sebagai rekam jejak riwayat.
+4. **Pengembalian ➜ Kas Denda**: Jika pengembalian buku melewati batas waktu peminjaman, sistem menghitung denda secara otomatis dan langsung mengakumulasikannya ke kas denda perpustakaan.
+5. **Sorting ➜ Tampilan Buku**: Setelah proses pengurutan pointer selesai, daftar buku akan langsung diperbarui dalam keadaan terurut rapi dari A sampai Z.
+
+---
+
+# 🗺️ Struktur Menu Program
+
+### 📖 Menu 1 — Manajemen Koleksi Buku
+- Tampilkan Semua Buku
+- Cari Buku Berdasarkan Judul / ID
+- Rekomendasi Buku
+- Urutkan Buku (A-Z)
+- Tambah Buku
+- Hapus Buku
+
+### 🧾 Menu 2 — Layanan Loket Perpustakaan
+- Tambah Antrean Mahasiswa
+- Lihat Antrean Aktif
+- Panggil / Proses Antrean Terdepan
+- Layanan Peminjaman Buku
+- Layanan Pengembalian Buku
+
+### 📊 Menu 3 — Laporan & Sirkulasi Perpustakaan
+- Lihat Riwayat Transaksi Terbaru
+- Lihat Laporan Kas Keuangan Denda
+- Hapus Riwayat Transaksi Terbaru (Pop)
+
+### 🚪 Menu 4 — Keluar Program
+Saat program ditutup, sistem akan menjalankan proses *deallokasi memori*. Seluruh node sisa pada struktur **Linked List**, **Queue**, dan **Stack** akan dihapus menggunakan perintah `delete` untuk memastikan **tidak terjadi memory leak**.
+
+---
+
+# 💻 Teknologi yang Digunakan
+
+- **Bahasa Pemrograman** : C++ (Standard Template Library minimal / Murni Pointer Objek)
+- **IDE Pengembangan** : Code::Blocks / Visual Studio Code
+- **Struktur Data** : Singly Linked List, Queue (FIFO), Stack (LIFO)
+- **Version Control** : Git & GitHub
+
+---
+
+# 📖 Informasi Akademik
+
+* **Mata Kuliah** : Praktikum Algoritma dan Struktur Data
+* **Program Studi** : Teknik Informatika
+* **Institusi** : Universitas Perjuangan Tasikmalaya
+* **Kelompok** : 4 
