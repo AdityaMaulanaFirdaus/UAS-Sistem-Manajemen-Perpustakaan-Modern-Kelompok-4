@@ -57,19 +57,75 @@ string angkaKeStringManual(int angka) {
 
 // TUGAS 1 - Modul Linked List Initialization & Book Database (Oleh: Nazwa)
 void sisipBuku(string id, string judul, string pengarang, bool tersedia) {
+    NodeBuku* baru = new NodeBuku;
+    baru->idBuku = id; baru->judul = judul; baru->pengarang = pengarang; baru->tersedia = tersedia; baru->next = NULL;
 
+    if (headBuku == NULL) {
+        headBuku = baru;
+    } else {
+        NodeBuku* temp = headBuku;
+        while (temp->next != NULL) temp = temp->next;
+        temp->next = baru;
+    }
 }
 
 void loadDatabaseBuku() {
-
+    sisipBuku("B03", "Logika Informatika", "Chou", true);
+    sisipBuku("B01", "Struktur Data C++", "Sasa", true);
+    sisipBuku("B04", "Pengenalan Algoritma", "Budi", true);
+    sisipBuku("B02", "Dasar Pemrograman", "Martin", true);
+    sisipBuku("B05", "Pemrograman C++ Lanjut", "Sasa", true); 
 }
 
 void tampilkanSemuaBuku() {
-
+    cout << "\n==================================================\n";
+    cout << "            DAFTAR BUKU PERPUSTAKAAN              \n";
+    cout << "==================================================\n";
+    if (headBuku == NULL) {
+        cout << " Perpustakaan saat ini tidak memiliki koleksi buku.\n";
+        return;
+    }
+    
+    NodeBuku* temp = headBuku;
+    int total = 0, tersedia = 0, dipinjam = 0;
+    while (temp != NULL) {
+        cout << " ID: " << temp->idBuku 
+             << " | Judul: " << temp->judul 
+             << " | Pengarang: " << temp->pengarang 
+             << " | Status: " << (temp->tersedia ? "Tersedia" : "Dipinjam") << "\n";
+        if (temp->tersedia) tersedia++; else dipinjam++;
+        total++;
+        temp = temp->next;
+    }
+    cout << "--------------------------------------------------\n";
+    cout << " Total Buku: " << total << " | Tersedia: " << tersedia << " | Dipinjam: " << dipinjam << "\n";
+    cout << "==================================================\n";
 }
 
 void cariBuku() {
+    string keyword;
+    cout << "\nMasukkan Judul atau ID Buku yang dicari: ";
+    getline(cin, keyword);
+    keyword = toLowerManual(keyword);
+    bool ketemu = false;
 
+    NodeBuku* temp = headBuku;
+    while (temp != NULL) {
+        string judulLower = toLowerManual(temp->judul);
+        string idLower = toLowerManual(temp->idBuku);
+        
+        if (judulLower.find(keyword) != string::npos || idLower == keyword) {
+            cout << "\n[Buku Ditemukan]\n";
+            cout << " -> ID: " << temp->idBuku << " | Judul: " << temp->judul << " | Pengarang: " << temp->pengarang << " | Status: " << (temp->tersedia ? "Tersedia" : "Dipinjam") << "\n";
+            ketemu = true;
+            
+            rekomendasiBuku(temp->idBuku, temp->pengarang, temp->judul);
+        }
+        temp = temp->next;
+    }
+    if (!ketemu) {
+        cout << "\n[Info] Buku dengan kata kunci tersebut tidak ditemukan.\n";
+    }
 }
 
 
@@ -96,107 +152,20 @@ void urutkanBuku() {
 // ---TUGAS 3 - Modul Queue Service & Book Borrowing (Oleh: Devina)---
 
 void tambahAntreanLoket() {
-    string nama, nim, keperluan;
-    cout << "\nNama Mahasiswa: "; getline(cin, nama);
-    cout << "NIM Mahasiswa : "; getline(cin, nim);
-    cout << "Keperluan (Pinjam/Kembali): "; getline(cin, keperluan); 
 
-    keperluan = toLowerManual(keperluan);
-
-    if (keperluan != "pinjam" && keperluan != "kembali") {
-        cout << "\n[Error] Keperluan harus diisi Pinjam atau Kembali.\n";
-        return;
-    }
-
-    NodeQueue* baru = new NodeQueue;
-    baru->namaMahasiswa = nama;
-    baru->nim = nim;
-    baru->keperluan = keperluan;
-    baru->next = NULL;
-
-    if (frontQueue == NULL) {
-        frontQueue = rearQueue = baru;
-    } else {
-        rearQueue->next = baru;
-        rearQueue = baru;
-    }
-
-    cout << "\n>> [Sukses] " << nama << " (" << nim << ") berhasil masuk ke antrean loket.\n";
 }
 
 void tampilkanSemuaAntrean() {
-    cout << "\n==================================================\n";
-    cout << "         DAFTAR MAHASISWA DALAM ANTREAN           \n";
-    cout << "==================================================\n";
-    if (frontQueue == NULL) {
-        cout << " [Info] Saat ini loket kosong, tidak ada antrean.\n";
-        cout << "==================================================\n";
-        return;
-    }
 
-    NodeQueue* temp = frontQueue;
-    int nomor = 1;
-    while (temp != NULL) {
-        cout << " Antrean [" << nomor++ << "] -> Nama: " << temp->namaMahasiswa 
-             << " | NIM: " << temp->nim 
-             << " | Keperluan: " << temp->keperluan << " Buku\n";
-        temp = temp->next;
-    }
-    cout << "==================================================\n";
 }
 
 void panggilAntreanLoket() {
-    if (frontQueue == NULL) {
-        cout << "\n[Info] Loket kosong. Tidak ada antrean mahasiswa saat ini.\n";
-        return;
-    }
-    NodeQueue* temp = frontQueue;
-    mahasiswaAktif = temp->namaMahasiswa;
-    nimAktif = temp->nim; 
-    keperluanAktif = temp->keperluan;
 
-    cout << "\n>>> PANGGILAN ANTREAN LOKET PERPUSTAKAAN <<<\n";
-    cout << " Atas Nama : " << mahasiswaAktif << "\n";
-    cout << " NIM       : " << nimAktif << "\n";
-    cout << " Keperluan : " << keperluanAktif << " Buku\n";
-    cout << "--------------------------------------------\n";
-    cout << " Silakan proses transaksi pada menu Layanan Pinjam/Kembali!\n";
-
-    frontQueue = frontQueue->next;
-    if (frontQueue == NULL) rearQueue = NULL;
-    delete temp;
 }
 
 void pinjamBuku() {
-    if (mahasiswaAktif == "") {
-        cout << "\n[Peringatan] Silakan panggil antrean loket terlebih dahulu sebelum melayani transaksi!\n";
-        return;
-    }
-    if (toLowerManual(keperluanAktif) != "pinjam") {
-    cout << "\n[Peringatan] Mahasiswa ini mengambil antrean untuk pengembalian buku.\n";
-    return;
-	}
-    string id;
-    cout << "\n[Melayani: " << mahasiswaAktif << " - " << nimAktif << "]\nMasukkan ID Buku untuk dipinjam: "; getline(cin, id);
-    NodeBuku* temp = headBuku;
-    
-    while (temp != NULL) {
-        if (toLowerManual(temp->idBuku) == toLowerManual(id)) {
-            if (temp->tersedia) {
-                temp->tersedia = false;
-                pushRiwayat(mahasiswaAktif + " (" + nimAktif + ") meminjam buku: " + temp->judul);
-                cout << "\n>> [Sukses] Berhasil meminjam buku \"" << temp->judul << "\".\n";
-                mahasiswaAktif = ""; nimAktif = ""; keperluanAktif = "";
-            } else {
-                cout << "\n[Peringatan] Maaf, buku sedang berada di tangan peminjam lain.\n";
-            }
-            return;
-        }
-        temp = temp->next;
-    }
-    cout << "\n[Error] ID Buku tidak terdaftar.\n";
-}
 
+}
 
 
 // ---TUGAS 4 - Modul PBook Return, Stack & Reporting (Oleh Rezki)---
