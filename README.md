@@ -95,6 +95,7 @@ Collection Management & Sorting
 - `tambahBuku()`
 - `hapusBuku()`
 - `urutkanBuku()`
+- `pushRiwayat()`
 
 ### Tanggung Jawab
 Mengembangkan fitur rekomendasi buku pintar, penambahan koleksi buku baru via input user, penghapusan koleksi dari list berdasarkan ID buku, serta pengurutan data buku (A-Z) menggunakan algoritma **Bubble Sort** berbasis manipulasi pointer.
@@ -125,7 +126,6 @@ Mengembangkan sistem antrean pelayanan loket perpustakaan menggunakan prinsip **
 Book Return, Stack & Reporting
 
 ### Daftar Fungsi
-- `pushRiwayat()`
 - `kembalikanBuku()`
 - `lihatRiwayatTransaksi()`
 - `lihatLaporanKeuanganDenda()`
